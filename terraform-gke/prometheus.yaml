@@ -22,21 +22,21 @@ metadata:
 spec:
   clusterIP: 10.15.243.202
   clusterIPs:
-  - 10.15.243.202
+    - 10.15.243.202
   internalTrafficPolicy: Cluster
   ipFamilies:
-  - IPv4
+    - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - name: http-web
-    port: 9090
-    protocol: TCP
-    targetPort: 9090
-  - appProtocol: http
-    name: reloader-web
-    port: 8080
-    protocol: TCP
-    targetPort: reloader-web
+    - name: http-web
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+    - appProtocol: http
+      name: reloader-web
+      port: 8080
+      protocol: TCP
+      targetPort: reloader-web
   selector:
     app.kubernetes.io/name: prometheus
     operator.prometheus.io/name: prometheus-operator-kube-p-prometheus
