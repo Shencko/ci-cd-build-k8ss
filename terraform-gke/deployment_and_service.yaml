@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment-cookie
+  labels:
+    app: cookie-webpage-one-lb
+    tier: front-end
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cookie-webpage-one-lb
+  template:
+    metadata:
+      labels:
+        app: cookie-webpage-one-lb
+        tier: front-end
+    spec:
+      containers:
+        - name: cookie-web-app
+          image: jendaredocker/jendarey-cookie-company-webpage-main
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cookieweb-loadbalancer-service
+  labels:
+    app: cookie-webpage-one-lb
+    tier: front-end
+spec:
+  selector:
+    app: cookie-webpage-one-lb
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

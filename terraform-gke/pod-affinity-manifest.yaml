@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anti-affinity-deployment
+  labels:
+    app: anti-affinity-cookie-app
+    tier: front-end
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: anti-affinity-cookie-app
+  template:
+    metadata:
+      labels:
+        app: anti-affinity-cookie-app
+        tier: front-end
+    spec:
+      containers:
+        - name: anti-affinity-cookie-container
+          image: jendaredocker/jendarey-cookie-company-webpage-main
+          ports:
+            - containerPort: 8080
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - anti-affinity-cookie-app
+              topologyKey: kubernetes.io/hostname
+
